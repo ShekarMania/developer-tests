@@ -13,22 +13,45 @@
 // }
 export function sortByBudget(sample) {
     // Also sort by movie_id
+    sample.sort((a,b) => {
+        if(a.budget.localeCompare(b.budget) == 0) {
+            return a.movie_id - b.movie_id;
+        }
+       return a.budget.localeCompare(b.budget);
+    });
+  
     return sample;
 }
 
 export function sortByTitle(sample) {
+    sample.sort((a,b) => a.title.localeCompare(b.title));
     return sample;
 }
 
 export function filterByBluray(sample) {
     // Also sort by movie_id
+    sample = sample.filter((obj) => obj.disc_format_name.indexOf("Blu-ray") != -1);
+    sample.sort((a,b) => a.movie_id - b.movie_id);
+  
     return sample;
 }
 
 export function transformArray(sample) {
+    sample = sample.map(item => ({
+        "title": item.title,
+        "phase": 1,
+        "release": item.release_date
+    }));
+
+    sample.sort((a,b) => a.title.localeCompare(b.title));
+  
     return sample;
 }
 
 export function sumBudget(sample) {
-    return sample;
+    // let sum = 0;
+    // sample.map(item => {
+    //     sum += Number(item.budget.replace(/[^0-9-.]/g, ''));
+    // })
+    return sample.reduce((acc, item) => acc + Number(item.budget.replace(/[^0-9-.]/g, '')), 0);
 }
