@@ -16,7 +16,7 @@ update()
 
 // Added this function
 function mod(val, mod) {
-    return (val + mod) % mod;
+    return ((val % mod) + mod) % mod;
 }
 
 function previous() {
